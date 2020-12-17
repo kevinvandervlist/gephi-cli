@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.kwonoh.gephi.cli.command.Custom1;
 import net.kwonoh.gephi.cli.command.ForceAtlas2Layout;
 import net.kwonoh.gephi.cli.command.FruchtermanReingoldLayout;
 import picocli.CommandLine;
@@ -14,7 +15,7 @@ import picocli.CommandLine.Command;
         sortOptions = false,
         mixinStandardHelpOptions = true,
         version = "gephi-cli 0.1",
-        subcommands = {ForceAtlas2Layout.class, FruchtermanReingoldLayout.class})
+        subcommands = {ForceAtlas2Layout.class, FruchtermanReingoldLayout.class, Custom1.class})
 public class GephiCLI implements Callable<Void> {
     @Override
     public Void call() throws Exception {
