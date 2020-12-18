@@ -124,10 +124,10 @@ public class Custom1 extends AbstractGephiCommand implements Callable<Void> {
 
         // Patch the layout a bit -- very hacky
         AppearanceModel m = appearanceController.getModel();
-        Function[] funcs = m.getNodeFunctions(graph);
+        Function[] nodeFuncs = m.getNodeFunctions(graph);
 
         // Note: order is important here!
-        TransformerConfiguration<?>[] configs = new TransformerConfiguration[] {
+        TransformerConfiguration<?>[] nodeConfigs = new TransformerConfiguration[] {
                 new TransformerConfiguration<>(
                         RankingNodeSizeTransformer.class,
                         t -> {
@@ -150,8 +150,8 @@ public class Custom1 extends AbstractGephiCommand implements Callable<Void> {
         };
 
         // Apply al configs in the defined order
-        for(TransformerConfiguration<?> tc : configs) {
-            tc.apply(funcs, appearanceController::transform);
+        for(TransformerConfiguration<?> tc : nodeConfigs) {
+            tc.apply(nodeFuncs, appearanceController::transform);
         }
 
         // Layouting
@@ -173,8 +173,13 @@ public class Custom1 extends AbstractGephiCommand implements Callable<Void> {
         PreviewProperties properties = model.getProperties();
         Pair<String, Object>[] props = new Pair[]{
                 new Pair<>(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE),
-                new Pair<>(PreviewProperty.EDGE_COLOR, new EdgeColor(Color.GRAY)),
-                new Pair<>(PreviewProperty.EDGE_THICKNESS, 0.1f),
+                new Pair<>(PreviewProperty.EDGE_COLOR, new EdgeColor(
+                        new Color(Integer.parseInt("BABABA", 16))
+                )),
+                new Pair<>(PreviewProperty.EDGE_THICKNESS, 1f),
+                new Pair<>(PreviewProperty.EDGE_RESCALE_WEIGHT, Boolean.TRUE),
+                new Pair<>(PreviewProperty.EDGE_RESCALE_WEIGHT_MIN, 2f),
+                new Pair<>(PreviewProperty.EDGE_RESCALE_WEIGHT_MAX, 20f),
                 new Pair<>(PreviewProperty.NODE_LABEL_FONT, properties.getFontValue(PreviewProperty.NODE_LABEL_FONT).deriveFont(8f)),
                 new Pair<>(PreviewProperty.NODE_LABEL_PROPORTIONAL_SIZE, Boolean.FALSE)
         };
